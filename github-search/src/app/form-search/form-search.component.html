@@ -28,3 +28,9 @@
         </div>
     </div>
 </nav>
+
+<h4>Form Search</h4>
+<input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+<div *ngFor="let user of listUser | async" class="search-result" >
+    {{user.login}}
+</div>
