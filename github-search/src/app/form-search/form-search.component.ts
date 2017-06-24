@@ -11,7 +11,8 @@ import {UserSearchService} from "../service/user-search.service";
 
 export class FormSearchComponent implements OnInit {
     protected txtSearch = new Subject<string>();
-    listUser: Observable<gitHubUser[]>;
+    listUser$: Observable<gitHubUser[]>;
+    testShow = true;
 
     constructor(private userSearchService: UserSearchService) {
     }
@@ -21,7 +22,7 @@ export class FormSearchComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.listUser = this.txtSearch
+        this.listUser$ = this.txtSearch
             .debounceTime(300)        // wait for 300ms pause in events
             .distinctUntilChanged()   // ignore if next search term is same as previous
             .switchMap(term => term   // switch to new observable each time

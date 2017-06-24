@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header col-md-3">
-            <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="" >
+            <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
             <a href="#" class="navbar-brand">GitHub Search Profile</a>
@@ -10,8 +10,20 @@
             <form id="form-search" role="search">
                 <div class="form-group">
                     <div class="input-group">
-                        <input class="form-control" name="username" placeholder="Enter A Github Username..." type="text">
+                        <input #searchBox id="search-box" (keyup)="search(searchBox.value)"
+                               class="form-control" name="username" placeholder="Enter A Github Username..."
+                               type="text">
                         <div class="input-group-addon"><i aria-hidden="true" class="fa fa-keyboard-o"></i></div>
+                        <!--The additional ? is required because list$ is only set after Angular2 tries to render
+                        the view the first time. ? prevents the rest of the sub-expression to be evaluated
+                        until the part left of ? becomes != null (Elvis or safe-navigation operator)
+                        https://stackoverflow.com/questions/38057537/how-to-check-length-of-the-an-observable-array
+                        -->
+                        <div class="suggestion-container" [hidden]="(listUser$ | async)?.length <= 0">
+                            <div *ngFor="let user of listUser$ | async" class="suggestion">
+                                {{user.login}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -28,9 +40,4 @@
         </div>
     </div>
 </nav>
-
-<h4>Form Search</h4>
-<input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
-<div *ngFor="let user of listUser | async" class="search-result" >
-    {{user.login}}
-</div>
+length: {{(listUser$ | async)?.length}}

@@ -14,7 +14,6 @@ export class UserSearchService {
     }
 
     searchUser(keySearch: string): Promise<gitHubUser[]> {
-        console.log('123123');
         return this.http
             .get(this.urlSearch + keySearch)
             .toPromise()
