@@ -12,12 +12,20 @@ import {UserSearchService} from "../service/user-search.service";
 export class FormSearchComponent implements OnInit {
     protected txtSearch = new Subject<string>();
     listUser$: Observable<gitHubUser[]>;
-    testShow = true;
+    protected userGit: gitHubUser;
+    hideResultSearch = true;
+    keySearch = '';
 
     constructor(private userSearchService: UserSearchService) {
+        document.addEventListener('click', this.offClickHandler.bind(this));
+    }
+
+    offClickHandler() {
+        this.hideResultSearch = true;
     }
 
     search(keySearch: string): void {
+        this.hideResultSearch = false;
         this.txtSearch.next(keySearch);
     }
 
@@ -25,7 +33,8 @@ export class FormSearchComponent implements OnInit {
         this.listUser$ = this.txtSearch
             .debounceTime(300)        // wait for 300ms pause in events
             .distinctUntilChanged()   // ignore if next search term is same as previous
-            .switchMap(term => term   // switch to new observable each time
+            // It cancels and discards previous search observables, returning only the latest search service observable.
+            .switchMap(term => term   // switch to new observable each time the term changes
                 // return the http search observable
                 ? this.userSearchService.searchUser(term)
                 // or the observable of empty heroes if no search term
@@ -38,8 +47,8 @@ export class FormSearchComponent implements OnInit {
             });
     }
 
-    hack(val) {
-        return Array.from(val);
+    findUser(userName) {
+        this.keySearch = userName;
+        this.userGit = new gitHubUser('', '', userName, '');
     }
-
 }

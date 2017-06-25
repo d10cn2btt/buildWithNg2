@@ -10,18 +10,22 @@
             <form id="form-search" role="search">
                 <div class="form-group">
                     <div class="input-group">
-                        <input #searchBox id="search-box" (keyup)="search(searchBox.value)"
-                               class="form-control" name="username" placeholder="Enter A Github Username..."
-                               type="text">
+                        <input [(ngModel)]="keySearch" id="search-box" (keyup)="search(keySearch)"
+                            class="form-control" name="username" placeholder="Enter A Github Username..."
+                            autocomplete="off" type="text"
+                        >
                         <div class="input-group-addon"><i aria-hidden="true" class="fa fa-keyboard-o"></i></div>
                         <!--The additional ? is required because list$ is only set after Angular2 tries to render
                         the view the first time. ? prevents the rest of the sub-expression to be evaluated
                         until the part left of ? becomes != null (Elvis or safe-navigation operator)
                         https://stackoverflow.com/questions/38057537/how-to-check-length-of-the-an-observable-array
+
+                        The *ngFor can't do anything with an Observable until you route it through the async pipe (AsyncPipe).
+                        The async pipe subscribes to the Observable and produces the array of heroes to *ngFor.
                         -->
-                        <div class="suggestion-container" [hidden]="(listUser$ | async)?.length <= 0">
-                            <div *ngFor="let user of listUser$ | async" class="suggestion">
-                                {{user.login}}
+                        <div class="suggestion-container" [hidden]="(listUser$ | async)?.length <= 0 || hideResultSearch">
+                            <div *ngFor="let user of listUser$ | async" class="suggestion" (click)="findUser(user.login)">
+                                <span>{{user.login}}</span>
                             </div>
                         </div>
                     </div>
@@ -40,4 +44,3 @@
         </div>
     </div>
 </nav>
-length: {{(listUser$ | async)?.length}}
