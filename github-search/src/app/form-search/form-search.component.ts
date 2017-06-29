@@ -30,6 +30,7 @@ export class FormSearchComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.findUser({'login': 'd10cn2btt'});
         this.listUser$ = this.txtSearch
             .debounceTime(300)        // wait for 300ms pause in events
             .distinctUntilChanged()   // ignore if next search term is same as previous
@@ -49,6 +50,9 @@ export class FormSearchComponent implements OnInit {
 
     findUser(user) {
         this.keySearch = user.login;
-        this.userGit = user
+        this.userSearchService.findUser(user.login)
+            .then(response => {
+                this.userGit = response
+            });
     }
 }

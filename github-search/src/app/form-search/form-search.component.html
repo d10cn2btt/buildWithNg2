@@ -46,13 +46,22 @@
     </div>
 </nav>
 
-{{ userGit | json }}
+<div class="container-info" *ngIf="userGit">
+    <div class="col-md-5">
+        <div class="panel panel-primary">
+            <div class="panel-heading">{{ keySearch | uppercase }}</div>
+            <div class="panel-body">
+                user info
+            </div>
+        </div>
+    </div>
 
-<div class="col-md-5" *ngIf="userGit">
-    <div class="panel panel-default">
-        <div class="panel-heading">{{ userGit.login }}</div>
-        <div class="panel-body">
-            user info
+    <div class="col-md-7">
+        <div class="panel panel-info">
+            <div class="panel-heading">{{ 'Repositories' | uppercase }}</div>
+            <div class="panel-body">
+                user info
+            </div>
         </div>
     </div>
 </div>
