@@ -47,8 +47,8 @@ export class FormSearchComponent implements OnInit {
             });
     }
 
-    findUser(userName) {
-        this.keySearch = userName;
-        this.userGit = new gitHubUser('', '', userName, '');
+    findUser(user) {
+        this.keySearch = user.login;
+        this.userGit = user
     }
 }

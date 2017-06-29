@@ -19,12 +19,13 @@
                         the view the first time. ? prevents the rest of the sub-expression to be evaluated
                         until the part left of ? becomes != null (Elvis or safe-navigation operator)
                         https://stackoverflow.com/questions/38057537/how-to-check-length-of-the-an-observable-array
+                        https://angular.io/guide/template-syntax#the-safe-navigation-operator----and-null-property-paths
 
                         The *ngFor can't do anything with an Observable until you route it through the async pipe (AsyncPipe).
                         The async pipe subscribes to the Observable and produces the array of heroes to *ngFor.
                         -->
                         <div class="suggestion-container" [hidden]="(listUser$ | async)?.length <= 0 || hideResultSearch">
-                            <div *ngFor="let user of listUser$ | async" class="suggestion" (click)="findUser(user.login)">
+                            <div *ngFor="let user of listUser$ | async" class="suggestion" (click)="findUser(user)">
                                 <span>{{user.login}}</span>
                             </div>
                         </div>
@@ -44,3 +45,14 @@
         </div>
     </div>
 </nav>
+
+{{ userGit | json }}
+
+<div class="col-md-5" *ngIf="userGit">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ userGit.login }}</div>
+        <div class="panel-body">
+            user info
+        </div>
+    </div>
+</div>
