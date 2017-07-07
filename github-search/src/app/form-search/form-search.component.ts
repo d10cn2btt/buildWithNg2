@@ -3,6 +3,8 @@ import {Subject, Observable} from "rxjs";
 import {gitHubUser} from "../model/github-user";
 import {UserSearchService} from "../service/user-search.service";
 
+import * as moment from 'moment';
+
 @Component({
     selector: 'form-search',
     templateUrl: './form-search.component.html',
@@ -31,7 +33,6 @@ export class FormSearchComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.findUser({'login': 'd10cn2btt'});
         this.listUser$ = this.txtSearch
             .debounceTime(300)        // wait for 300ms pause in events
             .distinctUntilChanged()   // ignore if next search term is same as previous
@@ -55,5 +56,8 @@ export class FormSearchComponent implements OnInit {
             .then(response => {
                 this.listRepo = response;
             });
+
+        this.userSearchService.findUser(user.login)
+            .then(response => this.userGit = response);
     }
 }

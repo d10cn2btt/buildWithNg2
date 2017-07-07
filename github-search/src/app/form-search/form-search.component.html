@@ -50,8 +50,20 @@
     <div class="col-md-5">
         <div class="panel panel-primary">
             <div class="panel-heading">{{ keySearch | uppercase }}</div>
-            <div class="panel-body">
-                user info
+            <div class="panel-body row user-info-wrapper">
+                <div class="col-md-4">
+                    <img class="img-responsive" [src]="(userGit)?.avatar_url" alt="">
+                    <a [href]="(userGit)?.url" class="btn btn-info view-profile">View Profile</a>
+                </div>
+                <div class="col-md-8">
+                    <ul class="list-group user-info">
+                        <li class="list-group-item"><b>Username: </b> {{userGit.login}}</li>
+                        <li class="list-group-item"><b>Location: </b> {{userGit.location}}</li>
+                        <li class="list-group-item"><b>Email: </b> {{userGit.email}}</li>
+                        <li class="list-group-item"><b>Company: </b> {{userGit.company}}</li>
+                        <li class="list-group-item"><b>Created At: </b> {{userGit.created_at | date: 'shortDate'}}</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -70,7 +82,7 @@
                                 <span class="badge">{{repo.watchers_count}}</span> Watchers
                             </span>
                         </div>
-                        <p class="heading">{{repo.name}}</p>
+                        <p class="heading"><b>{{repo.name}}</b></p>
                         <p class="description">{{repo.description}}</p>
                     </a>
                 </div>
