@@ -61,3 +61,21 @@
 [hidden] {
   display: none;
 }
+
+// repos
+.list-group-item {
+  p {
+    margin-bottom: 0;
+  }
+
+  .description {
+    width: 70%;
+  }
+
+  .stat-container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+  }
+}

@@ -13,6 +13,7 @@ export class FormSearchComponent implements OnInit {
     protected txtSearch = new Subject<string>();
     listUser$: Observable<gitHubUser[]>;
     protected userGit: gitHubUser;
+    protected listRepo;
     hideResultSearch = true;
     keySearch = '';
 
@@ -50,9 +51,9 @@ export class FormSearchComponent implements OnInit {
 
     findUser(user) {
         this.keySearch = user.login;
-        this.userSearchService.findUser(user.login)
+        this.userSearchService.searchRepo(user.login)
             .then(response => {
-                this.userGit = response
+                this.listRepo = response;
             });
     }
 }

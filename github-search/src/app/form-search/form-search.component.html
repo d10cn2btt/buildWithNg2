@@ -46,7 +46,7 @@
     </div>
 </nav>
 
-<div class="container-info" *ngIf="userGit">
+<div class="container-info" *ngIf="listRepo">
     <div class="col-md-5">
         <div class="panel panel-primary">
             <div class="panel-heading">{{ keySearch | uppercase }}</div>
@@ -60,7 +60,20 @@
         <div class="panel panel-info">
             <div class="panel-heading">{{ 'Repositories' | uppercase }}</div>
             <div class="panel-body">
-                user info
+                <div class="list-group">
+                    <a [href]="repo.html_url" target="_blank" class="list-group-item" *ngFor="let repo of listRepo">
+                        <div class="stat-container">
+                            <span class="btn btn-info">
+                                <span class="badge">{{repo.forks_count}}</span> Forks
+                            </span>
+                            <span class="btn btn-success">
+                                <span class="badge">{{repo.watchers_count}}</span> Watchers
+                            </span>
+                        </div>
+                        <p class="heading">{{repo.name}}</p>
+                        <p class="description">{{repo.description}}</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
