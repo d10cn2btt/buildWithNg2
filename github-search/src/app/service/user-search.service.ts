@@ -11,7 +11,6 @@ export class UserSearchService {
     private clientSecret = 'e79331a5dfc7518cc09d192bf5e6d6346c72b1dd';
     private urlSearch = 'https://api.github.com/search/users?q=';
     private urlFindUser = 'https://api.github.com/users/';
-    private urlSearchRepo = 'https://api.github.com/users/:username:/repos';
 
     constructor(private http: Http) {
 
@@ -43,9 +42,9 @@ export class UserSearchService {
             .catch(this.handleError);
     }
 
-    searchRepo(username: string) {
+    searchRepo(urlRepo: string) {
         return this.http
-            .get(this.urlSearchRepo.replace(':username:', username))
+            .get(urlRepo)
             .toPromise()
             .then(response => {
                 return response.json();

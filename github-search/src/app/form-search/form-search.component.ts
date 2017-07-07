@@ -52,12 +52,16 @@ export class FormSearchComponent implements OnInit {
 
     findUser(user) {
         this.keySearch = user.login;
-        this.userSearchService.searchRepo(user.login)
-            .then(response => {
-                this.listRepo = response;
-            });
-
         this.userSearchService.findUser(user.login)
-            .then(response => this.userGit = response);
+            .then(response => {
+                this.userGit = response;
+                return response.repos_url;
+            })
+            .then(
+                (urlRepo) => {
+                    this.userSearchService.searchRepo(urlRepo)
+                        .then(response => this.listRepo = response);
+                }
+            )
     }
 }
